@@ -1,4 +1,6 @@
-package br.com.gdarlan.data.vo.v1
+package br.com.gdarlan.data.vo.v2
+
+import java.util.*
 
 
 data class PersonVO(
@@ -7,5 +9,6 @@ data class PersonVO(
     var lastName: String = "",
     var address: String = "",
     var gender: String = "",
+    var birthDay: Date? = null,
 )
 

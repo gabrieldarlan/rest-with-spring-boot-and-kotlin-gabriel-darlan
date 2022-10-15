@@ -1,8 +1,9 @@
-package br.com.erudio.unittests.mapper.mocks
+package br.com.gdarlan.unittests.mapper.mocks
 
 import java.util.ArrayList
-import br.com.erudio.data.vo.v1.PersonVO
-import br.com.erudio.model.Person
+
+import br.com.gdarlan.data.vo.v1.PersonVO
+import br.com.gdarlan.model.Person
 
 class MockPerson {
     fun mockEntity(): Person {
