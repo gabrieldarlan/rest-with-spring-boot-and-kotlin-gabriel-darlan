@@ -2,7 +2,7 @@ package br.com.gdarlan.controllers
 
 import br.com.gdarlan.data.vo.v1.PersonVO
 import br.com.gdarlan.data.vo.v2.PersonVO as PersonVOV2
-import br.com.gdarlan.services.PersonServices
+import br.com.gdarlan.services.PersonService
 import br.com.gdarlan.util.MediaType
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*
 class PersonController {
 
     @Autowired
-    private lateinit var service: PersonServices
+    private lateinit var service: PersonService
 
 
     @GetMapping(produces = [MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML])

@@ -1,6 +1,8 @@
-package br.com.gdarlan.exceptions
+package br.com.gdarlan.exceptions.handler
 
-import br.com.gdarlan.exceptions.handler.ResourceNotFoundException
+import br.com.gdarlan.exceptions.ExceptionResponse
+import br.com.gdarlan.exceptions.RequiredObjectIsNullException
+import br.com.gdarlan.exceptions.ResourceNotFoundException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice
@@ -33,6 +35,16 @@ class CustomizedResponseEntityExceptionHandler : ResponseEntityExceptionHandler(
             details = request.getDescription(false)
         )
         return ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.NOT_FOUND)
+    }
+
+    @ExceptionHandler(RequiredObjectIsNullException::class)
+    fun handleBadRequestExceptions(ex: Exception, request: WebRequest): ResponseEntity<ExceptionResponse> {
+        val exceptionResponse = ExceptionResponse(
+            timestamp = Date(),
+            message = ex.message,
+            details = request.getDescription(false)
+        )
+        return ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.BAD_REQUEST)
     }
 
 
