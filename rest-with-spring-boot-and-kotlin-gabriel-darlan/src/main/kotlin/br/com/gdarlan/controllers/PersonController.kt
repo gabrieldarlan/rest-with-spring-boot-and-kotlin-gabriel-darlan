@@ -60,7 +60,7 @@ class PersonController {
     fun findAll(): List<PersonVO> {
         return service.findAll()
     }
-
+    @CrossOrigin(origins = ["http://localhost:8080"])
     @GetMapping(
         value = ["/{id}"],
         produces = [MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML]
@@ -103,6 +103,7 @@ class PersonController {
         return service.findById(id)
     }
 
+    @CrossOrigin(origins = ["http://localhost:8080", "https://erudio.com.br"])
     @PostMapping(
         consumes = [MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML],
         produces = [MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML]
@@ -149,7 +150,10 @@ class PersonController {
         produces = [MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML]
     )
     @Operation(
-        summary = "Updates a person's information", description = "Updates a person's information", tags = ["People"], responses = [
+        summary = "Updates a person's information",
+        description = "Updates a person's information",
+        tags = ["People"],
+        responses = [
             ApiResponse(
                 description = "Success", responseCode = "200", content = [
                     Content(schema = Schema(implementation = PersonVO::class))

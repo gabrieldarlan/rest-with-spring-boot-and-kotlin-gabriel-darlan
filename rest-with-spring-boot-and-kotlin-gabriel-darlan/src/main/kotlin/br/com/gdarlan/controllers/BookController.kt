@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
+//@CrossOrigin habilitar cors
 @RestController
 @RequestMapping("/api/book/v1")
 @Tag(name = "Book", description = "Endpoints for Manage Book")
@@ -149,7 +150,10 @@ class BookController {
         produces = [MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML]
     )
     @Operation(
-        summary = "Updates a book's information", description = "Updates a book's information", tags = ["Book"], responses = [
+        summary = "Updates a book's information",
+        description = "Updates a book's information",
+        tags = ["Book"],
+        responses = [
             ApiResponse(
                 description = "Success", responseCode = "200", content = [
                     Content(schema = Schema(implementation = BookVO::class))
