@@ -1,4 +1,4 @@
-package br.com.gdarlan.unittests.mapper.mocks
+package br.com.gdarlan.unittests.mocks
 
 import java.util.ArrayList
 

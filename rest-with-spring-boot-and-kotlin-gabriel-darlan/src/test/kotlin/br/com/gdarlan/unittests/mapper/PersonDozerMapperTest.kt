@@ -6,9 +6,9 @@ import org.junit.jupiter.api.Test
 import br.com.gdarlan.data.vo.v1.PersonVO
 import br.com.gdarlan.mapper.DozerMapper
 import br.com.gdarlan.model.Person
-import br.com.gdarlan.unittests.mapper.mocks.MockPerson
+import br.com.gdarlan.unittests.mocks.MockPerson
 
-class DozerMapperTest {
+class PersonDozerMapperTest {
 
     var inputObject: MockPerson? = null
 

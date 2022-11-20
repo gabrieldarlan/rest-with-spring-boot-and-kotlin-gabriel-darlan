@@ -1,9 +1,9 @@
-package br.com.gdarlan.mockito.services
+package br.com.gdarlan.unittests.mockito.services
 
 import br.com.gdarlan.exceptions.RequiredObjectIsNullException
 import br.com.gdarlan.repository.PersonRepository
 import br.com.gdarlan.services.PersonService
-import br.com.gdarlan.unittests.mapper.mocks.MockPerson
+import br.com.gdarlan.unittests.mocks.MockPerson
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.assertNotNull
@@ -22,7 +22,7 @@ import org.mockito.junit.jupiter.MockitoExtension
 import java.util.*
 
 @ExtendWith(MockitoExtension::class)
-internal class PersonServicesTest {
+internal class BookServicesTest {
 
     private lateinit var inputObject: MockPerson
 

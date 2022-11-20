@@ -46,12 +46,12 @@ class PersonService {
 
     }
 
-    fun createV2(person: PersonVOV2): PersonVOV2 {
-        logger.info("Creating one person with name ${person.firstName}")
-        val entity: Person = mapper.mapVOToEntity(person)
-        return mapper.mapEntityToVO(repository.save(entity))
-
-    }
+//    fun createV2(person: PersonVOV2): PersonVOV2 {
+//        logger.info("Creating one person with name ${person.firstName}")
+//        val entity: Person = mapper.mapVOToEntity(person)
+//        return mapper.mapEntityToVO(repository.save(entity))
+//
+//    }
 
     fun create(person: PersonVO?): PersonVO {
         if (person == null) throw RequiredObjectIsNullException()

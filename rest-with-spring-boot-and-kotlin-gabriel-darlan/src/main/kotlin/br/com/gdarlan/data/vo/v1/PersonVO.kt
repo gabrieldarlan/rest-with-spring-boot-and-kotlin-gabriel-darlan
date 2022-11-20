@@ -1,11 +1,14 @@
 package br.com.gdarlan.data.vo.v1
 
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonPropertyOrder
 import com.github.dozermapper.core.Mapping
 import org.springframework.hateoas.RepresentationModel
 
-//@JsonPropertyOrder("id", "address","first_name", "last_name","gender")
+@JsonPropertyOrder("id", "firstName", "", "lastName", "address", "gender")
 data class PersonVO(
     @Mapping("id")
+    @field:JsonProperty("id")
     var key: Long = 0,
 //    @field:JsonProperty("first_name")
     var firstName: String = "",

@@ -1,6 +1,6 @@
 package br.com.gdarlan.mapper.custom
 
-import br.com.gdarlan.data.vo.v2.PersonVO
+import br.com.gdarlan.data.vo.v1.PersonVO
 import br.com.gdarlan.model.Person
 import org.springframework.stereotype.Service
 import java.util.*
@@ -10,9 +10,9 @@ class PersonMapper {
 
     fun mapEntityToVO(person: Person): PersonVO {
         return PersonVO(
-            id = person.id,
+            key = person.id,
             address = person.address,
-            birthDay = Date(),
+//            birthDay = Date(),
             firstName = person.firstName,
             lastName = person.lastName,
             gender = person.gender,
@@ -21,7 +21,7 @@ class PersonMapper {
 
     fun mapVOToEntity(personVO: PersonVO): Person {
         return Person(
-            id = personVO.id,
+            id = personVO.key,
             address = personVO.address,
 //            birthDay = Date(),
             firstName = personVO.firstName,
