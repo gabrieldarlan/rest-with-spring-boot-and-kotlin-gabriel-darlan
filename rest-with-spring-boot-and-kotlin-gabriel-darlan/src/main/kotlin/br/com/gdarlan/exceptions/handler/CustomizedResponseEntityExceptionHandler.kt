@@ -1,6 +1,7 @@
 package br.com.gdarlan.exceptions.handler
 
 import br.com.gdarlan.exceptions.ExceptionResponse
+import br.com.gdarlan.exceptions.InvalidJwtAuthenticationException
 import br.com.gdarlan.exceptions.RequiredObjectIsNullException
 import br.com.gdarlan.exceptions.ResourceNotFoundException
 import org.springframework.http.HttpStatus
@@ -45,6 +46,20 @@ class CustomizedResponseEntityExceptionHandler : ResponseEntityExceptionHandler(
             details = request.getDescription(false)
         )
         return ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.BAD_REQUEST)
+    }
+
+
+    @ExceptionHandler(InvalidJwtAuthenticationException::class)
+    fun handleInvalidJwtAuthenticationExceptions(
+        ex: Exception,
+        request: WebRequest,
+    ): ResponseEntity<ExceptionResponse> {
+        val exceptionResponse = ExceptionResponse(
+            timestamp = Date(),
+            message = ex.message,
+            details = request.getDescription(false)
+        )
+        return ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.FORBIDDEN)
     }
 
 
