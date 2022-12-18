@@ -12,6 +12,7 @@ import br.com.gdarlan.repository.PersonRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.util.logging.Logger
 
 @Service
@@ -81,6 +82,18 @@ class PersonService {
         return personVO
     }
 
+    @Transactional
+    fun disabledPerson(id: Long): PersonVO {
+        logger.info("Disabling one person with id $id!")
+        repository.disabledPerson(id)
+        val person =
+            repository.findById(id).orElseThrow { ResourceNotFoundException("No records found for this id") }
+        val personVO = DozerMapper.parseObject(person, PersonVO::class.java)
+        val withSelfRel = linkTo(PersonController::class.java).slash(personVO.key).withSelfRel()
+        personVO.add(withSelfRel)
+        return personVO
+
+    }
 
     fun delete(id: Long) {
         logger.info("Deleting one person with id $id")
