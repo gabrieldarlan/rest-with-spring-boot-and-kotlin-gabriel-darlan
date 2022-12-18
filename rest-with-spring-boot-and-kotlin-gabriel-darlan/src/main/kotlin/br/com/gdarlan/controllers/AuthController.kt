@@ -34,8 +34,7 @@ class AuthController {
         return if (refreshToken.isNullOrBlank() || userName.isNullOrBlank())
             ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request")
         else authService.refreshToken(userName, refreshToken)
-//        var ok = ""
-//        return ResponseEntity.status(HttpStatus.OK).body("Invalid client request")
+
     }
 
 

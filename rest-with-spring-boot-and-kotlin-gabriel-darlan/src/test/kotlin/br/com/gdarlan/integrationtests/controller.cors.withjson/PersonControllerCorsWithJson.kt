@@ -2,7 +2,9 @@ package br.com.gdarlan.integrationtests.controller.cors.withjson
 
 import br.com.gdarlan.integrationtests.TestConfigs
 import br.com.gdarlan.integrationtests.testcontainer.AbstractIntegrationTest
+import br.com.gdarlan.integrationtests.vo.AccountCredentialsVO
 import br.com.gdarlan.integrationtests.vo.PersonVO
+import br.com.gdarlan.integrationtests.vo.TokenVO
 import io.restassured.RestAssured.given
 import io.restassured.builder.RequestSpecBuilder
 import io.restassured.filter.log.LogDetail
@@ -23,13 +25,36 @@ class PersonControllerCorsWithJson() : AbstractIntegrationTest() {
     private lateinit var specification: RequestSpecification
     private lateinit var objectMapper: ObjectMapper
     private lateinit var person: PersonVO
+    private lateinit var token: String
 
     @BeforeAll
     fun setupTests() {
         objectMapper = ObjectMapper()
         objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
         person = PersonVO()
+        token = ""
     }
+
+    @Test
+    @Order(1)
+    fun authorization() {
+        val user = AccountCredentialsVO(userName = "leandro", password = "admin123")
+        token = given()
+            .basePath("/auth/signin")
+            .port(TestConfigs.SERVER_PORT)
+            .contentType(TestConfigs.CONTENT_TYPE_JSON)
+            .body(user)
+            .`when`()
+            .post()
+            .then()
+            .statusCode(200)
+            .extract()
+            .body()
+            .`as`(TokenVO::class.java)
+            .accessToken!!
+
+    }
+
 
     @Test
     @Order(1)
@@ -38,6 +63,7 @@ class PersonControllerCorsWithJson() : AbstractIntegrationTest() {
 
         specification = RequestSpecBuilder()
             .addHeader(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_ERUDIO)
+            .addHeader(TestConfigs.HEADER_PARAM_AUTHORIZATION, "Bearer $token")
             .setBasePath("/api/person/v1")
             .setPort(TestConfigs.SERVER_PORT)
             .addFilter(RequestLoggingFilter(LogDetail.ALL))
@@ -82,6 +108,7 @@ class PersonControllerCorsWithJson() : AbstractIntegrationTest() {
 
         specification = RequestSpecBuilder()
             .addHeader(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_SEMERU)
+            .addHeader(TestConfigs.HEADER_PARAM_AUTHORIZATION, "Bearer $token")
             .setBasePath("/api/person/v1")
             .setPort(TestConfigs.SERVER_PORT)
             .addFilter(RequestLoggingFilter(LogDetail.ALL))
@@ -113,6 +140,7 @@ class PersonControllerCorsWithJson() : AbstractIntegrationTest() {
 
         specification = RequestSpecBuilder()
             .addHeader(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_LOCALHOST)
+            .addHeader(TestConfigs.HEADER_PARAM_AUTHORIZATION, "Bearer $token")
             .setBasePath("/api/person/v1")
             .setPort(TestConfigs.SERVER_PORT)
             .addFilter(RequestLoggingFilter(LogDetail.ALL))
@@ -156,6 +184,7 @@ class PersonControllerCorsWithJson() : AbstractIntegrationTest() {
 
         specification = RequestSpecBuilder()
             .addHeader(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_SEMERU)
+            .addHeader(TestConfigs.HEADER_PARAM_AUTHORIZATION, "Bearer $token")
             .setBasePath("/api/person/v1")
             .setPort(TestConfigs.SERVER_PORT)
             .addFilter(RequestLoggingFilter(LogDetail.ALL))
@@ -177,6 +206,7 @@ class PersonControllerCorsWithJson() : AbstractIntegrationTest() {
 
         assertEquals("Invalid CORS request", content)
     }
+
     private fun mockPerson() {
         person.firstName = "Nelson"
         person.lastName = "Piquet"
