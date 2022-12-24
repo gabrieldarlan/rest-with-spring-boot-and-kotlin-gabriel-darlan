@@ -6,10 +6,13 @@ import br.com.gdarlan.data.vo.v1.BookVO
 import br.com.gdarlan.exceptions.RequiredObjectIsNullException
 import br.com.gdarlan.exceptions.ResourceNotFoundException
 import br.com.gdarlan.mapper.DozerMapper
-import br.com.gdarlan.mapper.custom.BookMapper
 import br.com.gdarlan.model.Book
 import br.com.gdarlan.repository.BookRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Pageable
+import org.springframework.data.web.PagedResourcesAssembler
+import org.springframework.hateoas.EntityModel
+import org.springframework.hateoas.PagedModel
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo
 import org.springframework.stereotype.Service
 import java.util.logging.Logger
@@ -19,20 +22,19 @@ class BookService {
     @Autowired
     private lateinit var repository: BookRepository
 
+    @Autowired
+    private lateinit var pagedResourcesAssembler: PagedResourcesAssembler<BookVO>
 //    @Autowired
 //    private lateinit var mapper: BookMapper usado para mapeamento estilizado
 
     private val logger = Logger.getLogger(BookService::class.java.name)
 
-    fun findAll(): List<BookVO> {
+    fun findAll(pageable: Pageable): PagedModel<EntityModel<BookVO>> {
         logger.info("Finding all books!")
-        val books = repository.findAll()
-        val vos = DozerMapper.parseListObjects(books, BookVO::class.java)
-        vos.forEach { p ->
-            val withSelfRel = linkTo(BookController::class.java).slash(p.key).withSelfRel()
-            p.add(withSelfRel)
-        }
-        return vos
+        val books = repository.findAll(pageable)
+        val vos = books.map { b -> DozerMapper.parseObject(b, BookVO::class.java) }
+            .map { b -> b.add(linkTo(BookController::class.java).slash(b.key).withSelfRel()) }
+        return pagedResourcesAssembler.toModel(vos)
     }
 
     fun findById(id: Long): BookVO {

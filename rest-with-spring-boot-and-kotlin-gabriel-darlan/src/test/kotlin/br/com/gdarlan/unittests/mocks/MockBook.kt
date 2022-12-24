@@ -34,10 +34,10 @@ class MockBook {
         val book = Book()
         book.id = number.toLong()
         book.author = "Author Test$number"
-        val c = Calendar.getInstance()
-        val f = DateFormat.getDateInstance()
-        val date = f.parse("$number/10/2022")
-        book.launchDate = date
+//        val c = Calendar.getInstance()
+//        val f = DateFormat.getDateInstance()
+//        val date = f.parse("$number/10/2022")
+//        book.launchDate = date
         book.price = 0.0 + number
         book.title = "Title Test$number"
 

@@ -40,21 +40,12 @@ class BookDozerMapperTest {
         assertEquals("Author Test0", outputZero.author)
         assertEquals(0.0, outputZero.price)
         assertEquals("Title Test0", outputZero.title)
-//        assertEquals("0/10/2022", output.launchDate)
 
         val outputSeven: BookVO = outputList[7]
         assertEquals(7.toLong(), outputSeven.key)
         assertEquals("Author Test7", outputSeven.author)
         assertEquals(7.0, outputSeven.price)
         assertEquals("Title Test7", outputSeven.title)
-//        assertEquals("0/10/2022", output.launchDate)
-
-        val outputTwelve: BookVO = outputList[12]
-        assertEquals(12.toLong(), outputTwelve.key)
-        assertEquals("Author Test12", outputSeven.author)
-        assertEquals(7.0, outputSeven.price)
-        assertEquals("Title Test12", outputSeven.title)
-//        assertEquals("0/10/2022", output.launchDate)
     }
 
     @Test
